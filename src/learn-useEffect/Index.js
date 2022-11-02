@@ -1,61 +1,24 @@
-import React, { useState, useEffect } from "react";
-import "../index.css";
-export default function Index() {
-    const [count, setCount] = useState(0);
-    const [data, setData] = useState([]);
-    //dijalankan 1 kali
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/todos')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setData(data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-    //dijalankan terus setiap ada perubahan count
-    useEffect(() => {
-        if (count > 0) {
-            alert('component will update & count ${count}');
-        }
-    }, [count]);
-    //dijalankan terus menerus
-    useEffect(() => {
-        console.log('spam console kuy');
-    });
-    const countUp = () => {
-        setCount(count + 1);
-    };
-    const countDown = () => {
-        setCount(count - 1);
-    };
-    return (
-        <div className="Main">
-            <p className="Text"> Learn useEffect</p>
-            <p>KELOMPOKXX</p>
-            <ul>
-                {data.slice(0, 10).map((value) => (
-                    <li key={value.id}>{value.title}</li>
-                ))}
-            </ul>
-            <p className="Text">{count}</p>
-            <div className="ViewButton">
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
 
-                <div className="ViewButton2">
-                    <button className="Button"
-                        onClick={countUp}>
-                        Up
-</button>
-                </div>
-                <div className="ViewButton1">
-                    <button className="Button"
-                        onClick={countDown}>
-                        Down
-</button>
-                </div>
-            </div>
-        </div>
-    );
+function App(){
+  // Hooks lifecyle untuk se,tState
+    const [count, setCount] = useState(0);
+
+  //  useEffect sepertto componentDidmount
+   useEffect(() => {
+    // Update the document title using the browser API
+   alert('Helo Am Mount First')
+  //  Clean UP Data Atau ComponentWillUnmount
+    return function cleanup() {
+    setCount(0)
+    };
+  });
+return  (
+    <View style={{justifyContent:'center', alignItems:'center', marginTop:200}}>
+        <Text>Hitung Aku {count}</Text>
+        <Button title='Hitung' onPress={() => setCount(count+1)}/>
+    </View>
+);
 }
+export default App
